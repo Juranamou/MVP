@@ -10,7 +10,9 @@ async function main() {
 const spySchema = new mongoose.Schema({
   email: String,
   query: String,
-  target: Number
+  target: Number,
+  min: Number,
+  max: Number
 });
 
 const Spy = mongoose.model('Spy', spySchema);

@@ -12,6 +12,8 @@ export default function Main() {
   const [query, setQuery] = useState('');
   const [email, setEmail] = useState('');
   const [target, setTarget] = useState('');
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
   const [count, setCount] = useState(0);
@@ -114,7 +116,9 @@ export default function Main() {
     let form = {
       email: email,
       query: query,
-      target: target
+      target: target,
+      min: min,
+      max: max
     };
     axios.post('http://localhost:8080/form', form);
   }
@@ -144,7 +148,9 @@ export default function Main() {
       <Row style={{marginTop: '50px'}}>
         <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
         <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
-        <TextField id="outlined-basic" label="target $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
+        <TextField id="outlined-basic" label="Minimum $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
+        <TextField id="outlined-basic" label="Maximum $" variant="outlined" onChange={() => { setMax(event.target.value) }} />
+        <TextField id="outlined-basic" label="TARGET $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
         <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Submit</Button>
       </Row>
     </>
