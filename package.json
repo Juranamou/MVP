@@ -25,8 +25,10 @@
     "webpack-dev-server": "^4.9.3"
   },
   "scripts": {
-    "start": "webpack --mode=development",
-    "build": "webpack --mode=production",
-    "dev": "webpack serve --open"
+    "start": "nodemon ./server.js localhost 3000",
+    "build": "webpack --mode=development"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
   }
 }

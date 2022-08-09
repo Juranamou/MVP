@@ -7,25 +7,37 @@ import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import axios from 'axios';
 
+var testData = {
+  labels: [0, 1, 2, 3, 4, 5],
+  datasets: [{
+    label: 'Sold Product',
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgb(255, 99, 132)',
+    data: [0,0,0,0,0],
+  }]
+};
+
 export default function Main() {
 
   const [search, setSearch] = useState('');
-  const [sold, setSold] = useState([0, 0, 0, 0, 0, 0]);
+  const [sold, setSold] = useState([]);
 
   function handleSubmit(){
     console.log('clicked')
     axios.get(`http://localhost:4000/scraper/${search}`)
-  }
+      .then((data) => {setSold(data)});
+    let labels = new Array(sold.length);
 
-  const testData = {
-    labels: [0, 1, 2, 3, 4, 5],
-    datasets: [{
-      label: 'Sold Product',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      data: sold,
-    }]
-  };
+    testData = {
+      labels: labels,
+      datasets: [{
+        label: 'Sold Product',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: sold,
+      }]
+    };
+  }
 
   return (
     <>
