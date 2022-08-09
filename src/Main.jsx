@@ -10,12 +10,21 @@ import axios from 'axios';
 export default function Main() {
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
-  const [active, setActive] = useState('');
-
+  const [minimum, setMinimum] = useState(0);
+  const [maximum, setMaximum] = useState(0);
+  const [active, setActive] = useState({
+    labels: [0, 0],
+    datasets: [{
+      label: 'Active Listings',
+      backgroundColor: '#8A9BC3',
+      borderColor: '#8A9BC3',
+      data: [0, 0],
+    }]
+  });
   const [sold, setSold] = useState({
     labels: [0, 0],
     datasets: [{
-      label: 'Sold Product',
+      label: 'Sold Listings',
       backgroundColor: '#8A9BC3',
       borderColor: '#8A9BC3',
       data: [0, 0],
@@ -33,15 +42,20 @@ export default function Main() {
         // create labels
         let labels = [];
         let values = [];
+        let count = 0;
         for (var i = 0; i < data.data.length; i++) {
-          values.push(Number(data.data[i].split('$')[1]));
-          labels.push(i);
+          let num = Number(data.data[i].split('$')[1])
+          if (num > minimum && num < maximum) {
+            values.push(num);
+            labels.push(count);
+            count++;
+          }
         }
         // set new line Data
         let line = {
           labels: labels,
           datasets: [{
-            label: 'Sold Product',
+            label: 'Sold Listings',
             backgroundColor: '#8A9BC3',
             borderColor: '#8A9BC3',
             data: values,
@@ -57,21 +71,46 @@ export default function Main() {
     let query = search.split(' ');
     query = query.join('+');
     // active listings
-    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}`, { headers: { "Authorization": `Bearer ${process.env.TOKEN}` } })
-      .then((data) => { console.log(data.data.itemSummaries); })
+    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`, { headers: { "Authorization": `Bearer ${process.env.TOKEN}` } })
+      .then((data) => { console.log(data.data.itemSummaries); return data.data.itemSummaries; })
+      .then((products) => {
+        let prices = [];
+        let labels = [];
+        let count = 0;
+        for (var i = 0; i < products.length; i++) {
+          let num = Number(products[i].price.value)
+          if (num > minimum && num < maximum) {
+            prices.push(num);
+            labels.push(count);
+            count++;
+          }
+        }
+        let line = {
+          labels: labels,
+          datasets: [{
+            label: 'Active Listings',
+            backgroundColor: '#8A9BC3',
+            borderColor: '#8A9BC3',
+            data: prices,
+          }]
+        }
+        setActive(line);
+      })
   }
 
   return (
     <>
       <SearchBar>
         <Row>
+          <TextField id="outlined-basic" label="Minimum Price $" variant="outlined" onChange={() => { setMinimum(event.target.value) }} />
+          <TextField id="outlined-basic" label="Maximum Price $" variant="outlined" onChange={() => { setMaximum(event.target.value) }} />
           <TextField id="outlined-basic" label="Search" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
           <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
         </Row>
       </SearchBar>
       <Row >
         <div style={{ width: '50%' }}><Line data={sold} /></div>
-        <div style={{ width: '50%' }}><Line data={sold} /></div>
+        <div style={{ width: '50%' }}><Line data={active} /></div>
       </Row>
     </>
   )
