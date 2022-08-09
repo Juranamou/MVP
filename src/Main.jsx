@@ -110,6 +110,15 @@ export default function Main() {
       })
   }
 
+  function handleDB() {
+    let form = {
+      email: email,
+      query: query,
+      target: target
+    };
+    axios.post('http://localhost:8080/form', form);
+  }
+
   const lineOptions = {
     onClick: (e, element) => {
       let index = element[0].index;
@@ -117,12 +126,6 @@ export default function Main() {
       window.open(url[index], '_blank', 'noopener,noreferrer');
     }
   };
-
-  useEffect(() => {
-    setInterval(() => {
-      setCount(prevCount => prevCount + 1);
-    }, 1000);
-  }, []);
 
   return (
     <>
@@ -141,7 +144,7 @@ export default function Main() {
       <Row style={{marginTop: '50px'}}>
         <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
         <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
-        <TextField id="outlined-basic" label="target" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
+        <TextField id="outlined-basic" label="target $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
         <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Submit</Button>
       </Row>
     </>

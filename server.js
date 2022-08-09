@@ -1,12 +1,13 @@
-require('dotenv').config();
+const db = require('./db.js');
 const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
-
+const bodyParser = require('body-parser');
 
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -41,6 +42,11 @@ app.get('/scraper/:product', async (req, res) => {
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+app.post('/form', (req, res) => {
+  console.log(req.body);
+  db.addUser(req.body);
 });
 
 app.listen(8080, () => {
