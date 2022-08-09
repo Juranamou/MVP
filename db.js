@@ -20,4 +20,9 @@ const Spy = mongoose.model('Spy', spySchema);
 const addUser = (form) => {
   return (Spy.findOneAndUpdate(form.email, form, {upsert: true}).exec());
 };
+
+const findAll = () => {
+  return (Spy.find({}).exec());
+}
 module.exports.addUser = addUser;
+module.exports.findAll = findAll;

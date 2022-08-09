@@ -1,4 +1,5 @@
 const db = require('./db.js');
+const spy = require('./silentSpy.js');
 const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
