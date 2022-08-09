@@ -12,6 +12,7 @@ export default function Main() {
   const [search, setSearch] = useState('');
   const [minimum, setMinimum] = useState(0);
   const [maximum, setMaximum] = useState(0);
+  const [url, setUrl] = useState([]);
   const [active, setActive] = useState({
     labels: [0, 0],
     datasets: [{
@@ -66,6 +67,7 @@ export default function Main() {
       })
   }
 
+  // var url = [];
   function handleSubmitAPI() {
     // turn search into url query search
     let query = search.split(' ');
@@ -76,15 +78,20 @@ export default function Main() {
       .then((products) => {
         let prices = [];
         let labels = [];
+        let url = [];
         let count = 0;
         for (var i = 0; i < products.length; i++) {
           let num = Number(products[i].price.value)
           if (num > minimum && num < maximum) {
+            console.log(products[i].itemWebUrl);
             prices.push(num);
             labels.push(count);
+            url.push(products[i].itemWebUrl);
+            setUrl(url);
             count++;
           }
         }
+        console.log('url', url);
         let line = {
           labels: labels,
           datasets: [{
@@ -98,6 +105,13 @@ export default function Main() {
       })
   }
 
+  const lineOptions = {
+    onClick: (e, element) => {
+      let index = element[0].index;
+        alert(url[index]);
+    }
+  };
+
   return (
     <>
       <SearchBar>
@@ -110,7 +124,7 @@ export default function Main() {
       </SearchBar>
       <Row >
         <div style={{ width: '50%' }}><Line data={sold} /></div>
-        <div style={{ width: '50%' }}><Line data={active} /></div>
+        <div style={{ width: '50%' }}><Line data={active} options={lineOptions}/></div>
       </Row>
     </>
   )
