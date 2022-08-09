@@ -13,8 +13,8 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/scraper/:product', async (req, res) => {
-  let product = req.params;
-  console.log(req.params);
+  let product = req.params.product;
+  console.log('product',product);
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();

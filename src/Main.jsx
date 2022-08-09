@@ -7,23 +7,24 @@ import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import axios from 'axios';
 
-
-
 export default function Main() {
   const [search, setSearch] = useState('');
   const [sold, setSold] = useState({
     labels: [0, 0],
     datasets: [{
       label: 'Sold Product',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: '#8A9BC3',
+      borderColor: '#8A9BC3',
       data: [0, 0],
     }]
   });
 
   function handleSubmit() {
-    console.log('clicked')
-    axios.get(`http://localhost:8080/scraper/${search}`)
+    // turn search into url query search
+    let query = search.split(' ');
+    query = query.join('+');
+
+    axios.get(`http://localhost:8080/scraper/${query}`)
       .then((data) => {
         // create labels
         let labels = [];
@@ -32,14 +33,13 @@ export default function Main() {
           values.push(Number(data.data[i].split('$')[1]));
           labels.push(i);
         }
-
         // set new line Data
         let line = {
           labels: labels,
           datasets: [{
             label: 'Sold Product',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: '#8A9BC3',
+            borderColor: '#8A9BC3',
             data: values,
           }]
         }
@@ -56,7 +56,10 @@ export default function Main() {
           <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleSubmit() }}>Search</Button>
         </Row>
       </SearchBar>
-      <Line data={sold} />
+      <Row >
+        <div style={{width: '50%'}}><Line data={sold} /></div>
+        <div style={{width: '50%'}}><Line data={sold} /></div>
+      </Row>
     </>
   )
 }
@@ -68,4 +71,5 @@ const SearchBar = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: center;
+  width: ${(props) => {props.width}};
 `;
