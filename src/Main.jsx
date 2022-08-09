@@ -108,7 +108,8 @@ export default function Main() {
   const lineOptions = {
     onClick: (e, element) => {
       let index = element[0].index;
-        alert(url[index]);
+        // alert(url[index]);
+        window.open(url[index], '_blank', 'noopener,noreferrer');
     }
   };
 
