@@ -24,7 +24,7 @@ export default function Main() {
 
   function handleSubmit(){
     console.log('clicked')
-    axios.get(`http://localhost:4000/scraper/${search}`)
+    axios.get(`http://localhost:8080/scraper/${search}`)
       .then((data) => {setSold(data)});
     let labels = new Array(sold.length);
 

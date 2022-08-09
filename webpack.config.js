@@ -32,5 +32,11 @@ module.exports = {
     compress: true,
     // [port] what port on our local machine to run the dev server
     port: 3000,
+    proxy: {
+      '^/api/*': {
+        target: 'http://localhost:8080/api/',
+        secure: false
+      }
+    }
   }
 }

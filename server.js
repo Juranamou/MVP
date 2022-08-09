@@ -5,13 +5,17 @@ const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
 });
 
 app.get('/scraper/:product', async (req, res) => {
   let product = req.params;
   console.log(req.params);
+  console.log('poops')
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -33,6 +37,10 @@ app.get('/scraper/:product', async (req, res) => {
     await browser.close();
 })
 
-app.listen(3000, () => {
-  console.log(`Example app listening on port 3000`);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+app.listen(8080, () => {
+  console.log(`Example app listening on port 8080`);
 });
