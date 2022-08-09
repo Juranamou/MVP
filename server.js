@@ -15,7 +15,6 @@ app.all('*', function(req, res, next) {
 app.get('/scraper/:product', async (req, res) => {
   let product = req.params;
   console.log(req.params);
-  console.log('poops')
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -24,13 +23,13 @@ app.get('/scraper/:product', async (req, res) => {
   let data = await page.evaluate(() => {
     let price = [];
     document.querySelectorAll('li[class="lvprice prc"] > span').forEach(element => {
-      if (!element.innerText.includes('Trending')) {
+      if (!element.innerText.includes('Trending') && !element.innerText.includes('to')) {
         price.push(element.innerText);
       }
     });
     return price;
   })
-  console.log(JSON.stringify(data));
+  console.log('complete');
 
     // Respond with the image
     res.send(data);
