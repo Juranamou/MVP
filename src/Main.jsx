@@ -8,7 +8,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 export default function Main() {
+  //search bar state and initalize prices
   const [search, setSearch] = useState('');
+  const [active, setActive] = useState('');
+
   const [sold, setSold] = useState({
     labels: [0, 0],
     datasets: [{
@@ -19,11 +22,12 @@ export default function Main() {
     }]
   });
 
+  // gets sold prices and current prices
   function handleSubmit() {
     // turn search into url query search
     let query = search.split(' ');
     query = query.join('+');
-
+    // sold data
     axios.get(`http://localhost:8080/scraper/${query}`)
       .then((data) => {
         // create labels
@@ -48,17 +52,26 @@ export default function Main() {
       })
   }
 
+  function handleSubmitAPI() {
+    // turn search into url query search
+    let query = search.split(' ');
+    query = query.join('+');
+    // active listings
+    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}`, { headers: { "Authorization": process.env.TOKEN } })
+      .then((data) => { console.log(data); })
+  }
+
   return (
     <>
       <SearchBar>
         <Row>
           <TextField id="outlined-basic" label="Search" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
-          <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleSubmit() }}>Search</Button>
+          <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
         </Row>
       </SearchBar>
       <Row >
-        <div style={{width: '50%'}}><Line data={sold} /></div>
-        <div style={{width: '50%'}}><Line data={sold} /></div>
+        <div style={{ width: '50%' }}><Line data={sold} /></div>
+        <div style={{ width: '50%' }}><Line data={sold} /></div>
       </Row>
     </>
   )
@@ -71,5 +84,5 @@ const SearchBar = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: center;
-  width: ${(props) => {props.width}};
+  width: ${(props) => { props.width }};
 `;
