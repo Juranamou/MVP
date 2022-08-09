@@ -57,8 +57,8 @@ export default function Main() {
     let query = search.split(' ');
     query = query.join('+');
     // active listings
-    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}`, { headers: { "Authorization": process.env.TOKEN } })
-      .then((data) => { console.log(data); })
+    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}`, { headers: { "Authorization": `Bearer ${process.env.TOKEN}` } })
+      .then((data) => { console.log(data.data.itemSummaries); })
   }
 
   return (
