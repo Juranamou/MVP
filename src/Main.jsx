@@ -8,8 +8,13 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 export default function Main() {
+  // DB states
+  const [query, setQuery] = useState('');
+  const [email, setEmail] = useState('');
+  const [target, setTarget] = useState('');
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
+  const [count, setCount] = useState(0);
   const [minimum, setMinimum] = useState(0);
   const [maximum, setMaximum] = useState(0);
   const [url, setUrl] = useState([]);
@@ -108,10 +113,16 @@ export default function Main() {
   const lineOptions = {
     onClick: (e, element) => {
       let index = element[0].index;
-        // alert(url[index]);
-        window.open(url[index], '_blank', 'noopener,noreferrer');
+      // alert(url[index]);
+      window.open(url[index], '_blank', 'noopener,noreferrer');
     }
   };
+
+  useEffect(() => {
+    setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
+  }, []);
 
   return (
     <>
@@ -125,7 +136,13 @@ export default function Main() {
       </SearchBar>
       <Row >
         <div style={{ width: '50%' }}><Line data={sold} /></div>
-        <div style={{ width: '50%' }}><Line data={active} options={lineOptions}/></div>
+        <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
+      </Row>
+      <Row style={{marginTop: '50px'}}>
+        <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
+        <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
+        <TextField id="outlined-basic" label="target" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
+        <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Submit</Button>
       </Row>
     </>
   )
