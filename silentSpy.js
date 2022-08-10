@@ -9,14 +9,12 @@ async function looper() {
       for (var i = 0; i < data.length; i++) {
         let user = data[i];
         let urls = await axiosGet(user.query, user.target, user.min);
-        console.log('url', urls);
         if (urls.length > 0) {
-
           axios.post('http://localhost:8080/email',
            {
             from: 'johnlafayeti@gmail.com',
             to: user.email,
-            subject: 'wow',
+            subject: 'Silent Spy Subscription Alert',
             message: JSON.stringify(urls)
           })
         }
@@ -44,7 +42,7 @@ async function axiosGet(query, target, min) {
 }
 
 setInterval(() => {
-  looper()
-}, 80000000);
+  // looper()
+}, 10000);
 
 
