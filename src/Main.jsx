@@ -117,6 +117,7 @@ export default function Main() {
   }
 
   function handleDB() {
+    event.preventDefault();
     setQuery('');
     setEmail('');
     setTarget('');
@@ -128,7 +129,7 @@ export default function Main() {
       min: min
     };
     axios.post('http://localhost:8080/form', form)
-      .then(() => {setSuccess(true);})
+      .then(() => { setSuccess(true); })
   }
 
   const lineOptions = {
@@ -177,11 +178,13 @@ export default function Main() {
       <Intro>Subscribe to email notifications for when one of your queries has a product with a value at your target price. Minimum price should be used to reduce the amount of irrelevent products.</Intro>
       {success && <Suc>Success!</Suc>}
       <Row bottom={20}>
-        <TextField id="outlined-basic" value={email} label="Email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
-        <TextField id="outlined-basic" value={query} label="Item Name" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
-        <TextField id="outlined-basic" value={min} label="Minimum Price $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
-        <TextField id="outlined-basic" value={target} label="Target $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
-        <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Subscribe</Button>
+        <form onSubmit={() => { handleDB(); }}>
+          <TextField required type='email' id="outlined-basic" value={email} label="Email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
+          <TextField required type='text' id="outlined-basic" value={query} label="Item Name" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
+          <TextField required type='number' id="outlined-basic" value={min} label="Minimum Price $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
+          <TextField required type='number' id="outlined-basic" value={target} label="Target $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
+          <Button type="submit" size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} >Subscribe</Button>
+        </form>
       </Row>
     </>
   )
