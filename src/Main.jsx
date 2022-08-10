@@ -127,6 +127,18 @@ export default function Main() {
       let index = element[0].index;
       // alert(url[index]);
       window.open(url[index], '_blank', 'noopener,noreferrer');
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    }
+  };
+  const lineSoldOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
     }
   };
 
@@ -144,8 +156,12 @@ export default function Main() {
             onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
         </Row>
       </SearchBar>
+      <ChartBanner>
+        <ChartTitle>Sold</ChartTitle>
+        <ChartTitle>Active</ChartTitle>
+      </ChartBanner>
       <Row >
-        <div style={{ width: '50%' }}><Line data={sold} /></div>
+        <div style={{ width: '50%' }}><Line data={sold} options={lineSoldOptions} /></div>
         <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
       </Row>
       <Row style={{ marginTop: '50px' }}>
@@ -169,7 +185,6 @@ font-size: 20px;
 padding: 0px;
 text-align: center;
 `;
-
 const SearchBar = styled.div`
   width: 50%;
   margin: 0 auto;
@@ -178,4 +193,13 @@ const Row = styled.div`
   display: flex;
   justify-content: center;
   width: ${(props) => { props.width }};
+`;
+const ChartBanner = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+const ChartTitle = styled.div`
+color: #9CABCD;
+font-size: 30px;
+font-weight: bold;
 `;

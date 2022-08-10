@@ -29,8 +29,8 @@ const Row = styled.div`
 `;
 
 const Paragraph = styled.p`
-margin-top: 70px;
-margin-bottom: 70px;
+margin-top: 40px;
+margin-bottom: 40px;
 margin-left: auto;
 margin-right: auto;
 color: #9CABCD;
