@@ -169,7 +169,8 @@ export default function Main() {
         <div style={{ width: '50%' }}><Line data={sold} options={lineSoldOptions} /></div>
         <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
       </Row>
-      <Row style={{ marginTop: '50px' }}>
+      <Intro>Subscribe to email notifications for when one of your queries has a product with a value at your target price.</Intro>
+      <Row bottom={80}>
         <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
         <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
         <TextField id="outlined-basic" label="Minimum $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
@@ -190,6 +191,17 @@ font-size: 20px;
 padding: 0px;
 text-align: center;
 `;
+const Intro = styled.p`
+margin-top: 50px;
+margin-bottom: 15px;
+margin-left: auto;
+margin-right: auto;
+color: #9CABCD;
+width: 1200px;
+font-size: 20px;
+padding: 0px;
+text-align: center;
+`;
 const SearchBar = styled.div`
   width: 50%;
   margin: 0 auto;
@@ -197,7 +209,7 @@ const SearchBar = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: center;
-  width: ${(props) => { props.width }};
+  margin-bottom: ${props => props.bottom}px;
 `;
 const ChartBanner = styled.div`
   display: flex;
