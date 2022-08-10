@@ -14,6 +14,7 @@ export default function Main() {
   const [email, setEmail] = useState('');
   const [target, setTarget] = useState('');
   const [min, setMin] = useState('');
+  const [success, setSuccess] = useState(false);
   const [loader, setLoader] = useState(false);
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
@@ -126,7 +127,8 @@ export default function Main() {
       target: target,
       min: min
     };
-    axios.post('http://localhost:8080/form', form);
+    axios.post('http://localhost:8080/form', form)
+      .then(() => {setSuccess(true);})
   }
 
   const lineOptions = {
@@ -173,7 +175,8 @@ export default function Main() {
         <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
       </Row>
       <Intro>Subscribe to email notifications for when one of your queries has a product with a value at your target price. Minimum price should be used to reduce the amount of irrelevent products.</Intro>
-      <Row bottom={80}>
+      {success && <Suc>Success!</Suc>}
+      <Row bottom={20}>
         <TextField id="outlined-basic" value={email} label="Email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
         <TextField id="outlined-basic" value={query} label="Item Name" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
         <TextField id="outlined-basic" value={min} label="Minimum Price $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
@@ -183,6 +186,18 @@ export default function Main() {
     </>
   )
 }
+const Suc = styled.p`
+margin-top: 10px;
+margin-bottom: 15px;
+margin-left: auto;
+margin-right: auto;
+color: #9CABCD;
+width: 870px;
+font-size: 20px;
+padding: 0px;
+text-align: center;
+font-weight:600;
+`;
 const Paragraph = styled.p`
 margin-top: 5px;
 margin-bottom: 5px;
