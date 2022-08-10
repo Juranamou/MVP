@@ -43,6 +43,7 @@ export default function Main() {
 
   // gets sold prices and current prices
   function handleSubmit() {
+    event.preventDefault();
     setLoader(true);
     // turn search into url query search
     let query = search.split(' ');
@@ -80,6 +81,7 @@ export default function Main() {
 
   // var url = [];
   function handleSubmitAPI() {
+    event.preventDefault();
     // turn search into url query search
     let query = search.split(' ');
     query = query.join('+');
@@ -159,11 +161,12 @@ export default function Main() {
           Input a minimum and maximum price for your ebay search to limit products that do not pertain to your item of interest.
         </Paragraph>
         <Row>
-          <TextField id="outlined-basic" label="Minimum Price $" variant="outlined" onChange={() => { setMinimum(event.target.value) }} />
-          <TextField id="outlined-basic" label="Maximum Price $" variant="outlined" onChange={() => { setMaximum(event.target.value) }} />
-          <TextField id="outlined-basic" label="Item Name" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
-          <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }}
-            onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
+          <form onSubmit={() => { handleSubmit(); handleSubmitAPI(); }}>
+            <TextField required type='number' id="outlined-basic" label="Minimum Price $" variant="outlined" onChange={() => { setMinimum(event.target.value) }} />
+            <TextField required type='number' id="outlined-basic" label="Maximum Price $" variant="outlined" onChange={() => { setMaximum(event.target.value) }} />
+            <TextField required type='text' id="outlined-basic" label="Item Name" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
+            <Button type='submit' size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }}>Search</Button>
+          </form>
         </Row>
       </SearchBar>
       <ChartBanner>
