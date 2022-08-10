@@ -1,6 +1,7 @@
 const db = require('./db.js');
 const spy = require('./silentSpy.js');
 const puppeteer = require('puppeteer');
+var nodemailer = require('nodemailer');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -51,6 +52,11 @@ app.post('/form', (req, res) => {
     .then(() => {res.sendStatus(200);})
     .catch((err) => {console.log(err);})
 });
+
+// qcblmodnpmjvfcyy
+app.post('/email', (req, res) => {
+
+})
 
 app.listen(8080, () => {
   console.log(`Example app listening on port 8080`);
