@@ -13,8 +13,7 @@ export default function Main() {
   const [query, setQuery] = useState('');
   const [email, setEmail] = useState('');
   const [target, setTarget] = useState('');
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
+  const [min, setMin] = useState('');
   const [loader, setLoader] = useState(false);
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
@@ -117,6 +116,10 @@ export default function Main() {
   }
 
   function handleDB() {
+    setQuery('');
+    setEmail('');
+    setTarget('');
+    setMin('');
     let form = {
       email: email,
       query: query,
@@ -155,27 +158,27 @@ export default function Main() {
         <Row>
           <TextField id="outlined-basic" label="Minimum Price $" variant="outlined" onChange={() => { setMinimum(event.target.value) }} />
           <TextField id="outlined-basic" label="Maximum Price $" variant="outlined" onChange={() => { setMaximum(event.target.value) }} />
-          <TextField id="outlined-basic" label="Search" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
+          <TextField id="outlined-basic" label="Item Name" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
           <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }}
             onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
         </Row>
       </SearchBar>
       <ChartBanner>
         {loader ? <Row><ChartTitle>Sold </ChartTitle> <div className="loader"></div></Row> : <ChartTitle>Sold </ChartTitle>}
-        <ChartTitle>Active</ChartTitle>
+        <ChartTitle>Active Listings</ChartTitle>
       </ChartBanner>
       <Row >
         <Puff stroke="#98ff98" strokeOpacity={.125} speed={.75} />
         <div style={{ width: '50%' }}><Line data={sold} options={lineSoldOptions} /></div>
         <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
       </Row>
-      <Intro>Subscribe to email notifications for when one of your queries has a product with a value at your target price.</Intro>
+      <Intro>Subscribe to email notifications for when one of your queries has a product with a value at your target price. Minimum price should be used to reduce the amount of irrelevent products.</Intro>
       <Row bottom={80}>
-        <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
-        <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
-        <TextField id="outlined-basic" label="Minimum $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
-        <TextField id="outlined-basic" label="TARGET $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
-        <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Submit</Button>
+        <TextField id="outlined-basic" value={email} label="Email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
+        <TextField id="outlined-basic" value={query} label="Item Name" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
+        <TextField id="outlined-basic" value={min} label="Minimum Price $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
+        <TextField id="outlined-basic" value={target} label="Target $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
+        <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Subscribe</Button>
       </Row>
     </>
   )
@@ -197,7 +200,7 @@ margin-bottom: 15px;
 margin-left: auto;
 margin-right: auto;
 color: #9CABCD;
-width: 1200px;
+width: 870px;
 font-size: 20px;
 padding: 0px;
 text-align: center;

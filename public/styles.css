@@ -1,6 +1,6 @@
-/* #root{
-  font-family: sans-serif;
-} */
+#root{
+  font-family: 'Raleway', sans-serif;
+}
 
 .loader {
   border: 10px solid #f3f3f3; /* Light grey */
