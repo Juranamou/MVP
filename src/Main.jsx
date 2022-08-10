@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import LoadingIcons, { Puff } from 'react-loading-icons';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -14,6 +15,7 @@ export default function Main() {
   const [target, setTarget] = useState('');
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
+  const [loader, setLoader] = useState(false);
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
   const [count, setCount] = useState(0);
@@ -41,6 +43,7 @@ export default function Main() {
 
   // gets sold prices and current prices
   function handleSubmit() {
+    setLoader(true);
     // turn search into url query search
     let query = search.split(' ');
     query = query.join('+');
@@ -71,6 +74,7 @@ export default function Main() {
         }
         console.log(data.data);
         setSold(line);
+        setLoader(false);
       })
   }
 
@@ -157,10 +161,11 @@ export default function Main() {
         </Row>
       </SearchBar>
       <ChartBanner>
-        <ChartTitle>Sold</ChartTitle>
+        {loader ? <Row><ChartTitle>Sold </ChartTitle> <div className="loader"></div></Row> : <ChartTitle>Sold </ChartTitle>}
         <ChartTitle>Active</ChartTitle>
       </ChartBanner>
       <Row >
+        <Puff stroke="#98ff98" strokeOpacity={.125} speed={.75} />
         <div style={{ width: '50%' }}><Line data={sold} options={lineSoldOptions} /></div>
         <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
       </Row>
