@@ -133,18 +133,22 @@ export default function Main() {
   return (
     <>
       <SearchBar>
+        <Paragraph>
+          Input a minimum and maximum price for your ebay search to limit products that do not pertain to your item of interest.
+        </Paragraph>
         <Row>
           <TextField id="outlined-basic" label="Minimum Price $" variant="outlined" onChange={() => { setMinimum(event.target.value) }} />
           <TextField id="outlined-basic" label="Maximum Price $" variant="outlined" onChange={() => { setMaximum(event.target.value) }} />
           <TextField id="outlined-basic" label="Search" variant="outlined" onChange={() => { setSearch(event.target.value) }} />
-          <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
+          <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }}
+            onClick={() => { handleSubmit(); handleSubmitAPI(); }}>Search</Button>
         </Row>
       </SearchBar>
       <Row >
         <div style={{ width: '50%' }}><Line data={sold} /></div>
         <div style={{ width: '50%' }}><Line data={active} options={lineOptions} /></div>
       </Row>
-      <Row style={{marginTop: '50px'}}>
+      <Row style={{ marginTop: '50px' }}>
         <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
         <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
         <TextField id="outlined-basic" label="Minimum $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
@@ -154,6 +158,17 @@ export default function Main() {
     </>
   )
 }
+const Paragraph = styled.p`
+margin-top: 5px;
+margin-bottom: 5px;
+margin-left: auto;
+margin-right: auto;
+color: #9CABCD;
+width: 1200px;
+font-size: 20px;
+padding: 0px;
+text-align: center;
+`;
 
 const SearchBar = styled.div`
   width: 50%;
