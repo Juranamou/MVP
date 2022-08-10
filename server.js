@@ -47,7 +47,9 @@ app.get('*', (req, res) => {
 
 app.post('/form', (req, res) => {
   console.log(req.body);
-  db.addUser(req.body);
+  db.addUser(req.body)
+    .then(() => {res.sendStatus(200);})
+    .catch((err) => {console.log(err);})
 });
 
 app.listen(8080, () => {

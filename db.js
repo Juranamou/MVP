@@ -12,13 +12,13 @@ const spySchema = new mongoose.Schema({
   query: String,
   target: Number,
   min: Number,
-  max: Number
 });
 
 const Spy = mongoose.model('Spy', spySchema);
 
 const addUser = (form) => {
-  return (Spy.findOneAndUpdate(form.email, form, {upsert: true}).exec());
+  console.log('formemail', form.email)
+  return (Spy.create(form));
 };
 
 const findAll = () => {

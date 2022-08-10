@@ -117,8 +117,7 @@ export default function Main() {
       email: email,
       query: query,
       target: target,
-      min: min,
-      max: max
+      min: min
     };
     axios.post('http://localhost:8080/form', form);
   }
@@ -149,7 +148,6 @@ export default function Main() {
         <TextField id="outlined-basic" label="email" variant="outlined" onChange={() => { setEmail(event.target.value) }} />
         <TextField id="outlined-basic" label="query" variant="outlined" onChange={() => { setQuery(event.target.value) }} />
         <TextField id="outlined-basic" label="Minimum $" variant="outlined" onChange={() => { setMin(event.target.value) }} />
-        <TextField id="outlined-basic" label="Maximum $" variant="outlined" onChange={() => { setMax(event.target.value) }} />
         <TextField id="outlined-basic" label="TARGET $" variant="outlined" onChange={() => { setTarget(event.target.value) }} />
         <Button size="large" variant="contained" style={{ 'marginLeft': '10px', 'height': '55px' }} onClick={() => { handleDB(); }}>Submit</Button>
       </Row>
