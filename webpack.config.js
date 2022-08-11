@@ -2,6 +2,13 @@ const Dotenv = require('dotenv-webpack');
 const path = require("path");
 
 module.exports = {
+  resolve: {
+    fallback: {
+      "fs": false,
+      "https": false,
+      "path": false,
+    },
+  },
   mode: "development",
   entry: "./src/index.jsx",
   output: {
