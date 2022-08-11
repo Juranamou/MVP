@@ -7,9 +7,15 @@ import Chart from 'chart.js/auto'
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import axios from 'axios';
-import {token} from '../token.js';
 
 export default function Main() {
+  // token
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    axios.get('http://localhost:8080/token')
+      .then((data)=>{console.log(data.data.access_token); setToken(data.data.access_token);})
+  }, [])
+
   // DB states
   const [query, setQuery] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +23,7 @@ export default function Main() {
   const [min, setMin] = useState('');
   const [success, setSuccess] = useState(false);
   const [loader, setLoader] = useState(false);
+
   //search bar state and initalize prices
   const [search, setSearch] = useState('');
   const [count, setCount] = useState(0);
@@ -88,7 +95,7 @@ export default function Main() {
     let query = search.split(' ');
     query = query.join('+');
     // active listings
-    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`, { headers: { "Authorization": `Bearer ${process.env.TOKEN}` } })
+    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`, { headers: { "Authorization": `Bearer ${token}` } })
       .then((data) => { console.log(data.data.itemSummaries); return data.data.itemSummaries; })
       .then((products) => {
         let prices = [];

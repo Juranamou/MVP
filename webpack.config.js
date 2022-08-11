@@ -4,9 +4,10 @@ const webpack = require('webpack');
 
 module.exports = {
   resolve: {
+    alias: {https: "https-browserify", http:"http-browserify"},
     fallback: {
+      "url": require.resolve("url/"),
       "fs": false,
-      "https": false,
       "path": false,
     },
   },

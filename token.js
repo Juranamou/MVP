@@ -1,24 +1,22 @@
 const EbayAuthToken = require('ebay-oauth-nodejs-client');
 
-var token;
 const ebayAuthToken = new EbayAuthToken({
-    clientId: 'JohnEcon-SilentSp-PRD-913e5f484-4042dff1',
-    clientSecret: 'PRD-13e5f4842591-e716-4366-82af-43ac',
-    redirectUri: 'John_Economou-JohnEcon-Silent-ioslypt'
+    clientId: process.env.clientId,
+    clientSecret: process.env.clientSecret,
+    redirectUri: process.env.redirectUri
 });
 
-
-(async () => {
+async function createToken() {
   token = await ebayAuthToken.getApplicationToken('PRODUCTION');
   console.log(token);
-  module.exports.token = token;
-})();
+}
+
+createToken();
 
 setInterval(() => {
   (async () => {
     token = await ebayAuthToken.getApplicationToken('PRODUCTION');
-    // console.log(token);
-    // module.exports.token = token;
   })();
 }, 4000000);
 
+module.exports.createToken = createToken

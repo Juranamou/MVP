@@ -7,7 +7,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const { response } = require('express');
-
+const EbayAuthToken = require('ebay-oauth-nodejs-client');
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,6 +18,17 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
+});
+
+
+app.get('/token', async (req, res) => {
+   const ebayAuthToken = new EbayAuthToken({
+    clientId: process.env.clientId,
+    clientSecret: process.env.clientSecret,
+    redirectUri: process.env.redirectUri
+  });
+  const token = await ebayAuthToken.getApplicationToken('PRODUCTION');
+  res.send(token);
 });
 
 app.get('/scraper/:product', async (req, res) => {
@@ -77,8 +88,8 @@ app.post('/email', (req, res) => {
     text: message
   };
 
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error) {
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
