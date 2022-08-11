@@ -1,5 +1,6 @@
 const Dotenv = require('dotenv-webpack');
 const path = require("path");
+const webpack = require('webpack');
 
 module.exports = {
   resolve: {
@@ -48,6 +49,12 @@ module.exports = {
     }
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     new Dotenv(),
   ]
 }

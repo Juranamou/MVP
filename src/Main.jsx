@@ -7,7 +7,7 @@ import Chart from 'chart.js/auto'
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import axios from 'axios';
-import {token} from '../token.js'
+import {token} from '../token.js';
 
 export default function Main() {
   // DB states
@@ -83,12 +83,12 @@ export default function Main() {
   // var url = [];
   function handleSubmitAPI() {
     event.preventDefault();
-    console.log('TOKEN', process.env.TOKEN);
+    console.log('TOKEN', token);
     // turn search into url query search
     let query = search.split(' ');
     query = query.join('+');
     // active listings
-    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`, { headers: { "Authorization": `Bearer ${query}` } })
+    axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`, { headers: { "Authorization": `Bearer ${process.env.TOKEN}` } })
       .then((data) => { console.log(data.data.itemSummaries); return data.data.itemSummaries; })
       .then((products) => {
         let prices = [];
