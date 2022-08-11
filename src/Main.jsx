@@ -8,6 +8,7 @@ import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import axios from 'axios';
 import {token} from '../token.js'
+
 export default function Main() {
   // DB states
   const [query, setQuery] = useState('');
