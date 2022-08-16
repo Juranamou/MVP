@@ -39,9 +39,11 @@
     "webpack-dev-server": "^4.10.0"
   },
   "scripts": {
-    "start": "nodemon server.js",
-    "build": "webpack --mode=development",
-    "dev": "webpack serve --open"
+    "start": "webpack --mode=development --watch",
+    "build": "webpack --mode=production",
+    "dev": "webpack serve --open",
+    "server-dev": "npx nodemon -- watch server ./server.js",
+    "both": "npm run start & npm run server-dev"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4",

@@ -12,8 +12,8 @@ export default function Main() {
   // token
   const [token, setToken] = useState('');
   useEffect(() => {
-    axios.get('http://localhost:8080/token')
-      .then((data)=>{console.log(data.data.access_token); setToken(data.data.access_token);})
+    axios.get('http://localhost:3000/token')
+      .then((data)=>{ setToken(data.data.access_token);})
   }, [])
 
   // DB states
@@ -57,7 +57,7 @@ export default function Main() {
     let query = search.split(' ');
     query = query.join('+');
     // sold data
-    axios.get(`http://localhost:8080/scraper/${query}`)
+    axios.get(`http://localhost:3000/scraper/${query}`)
       .then((data) => {
         // create labels
         let labels = [];
@@ -81,7 +81,6 @@ export default function Main() {
             data: values,
           }]
         }
-        console.log(data.data);
         setSold(line);
         setLoader(false);
       })
@@ -90,7 +89,6 @@ export default function Main() {
   // var url = [];
   function handleSubmitAPI() {
     event.preventDefault();
-    console.log('TOKEN', token);
     // turn search into url query search
     let query = search.split(' ');
     query = query.join('+');
@@ -105,7 +103,6 @@ export default function Main() {
         for (var i = 0; i < products.length; i++) {
           let num = Number(products[i].price.value)
           if (num > minimum && num < maximum) {
-            console.log(products[i].itemWebUrl);
             prices.push(num);
             labels.push(count);
             url.push(products[i].itemWebUrl);
@@ -113,7 +110,6 @@ export default function Main() {
             count++;
           }
         }
-        console.log('url', url);
         let line = {
           labels: labels,
           datasets: [{
@@ -139,7 +135,7 @@ export default function Main() {
       target: target,
       min: min
     };
-    axios.post('http://localhost:8080/form', form)
+    axios.post('http://localhost:3000/form', form)
       .then(() => { setSuccess(true); })
   }
 

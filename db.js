@@ -17,7 +17,6 @@ const spySchema = new mongoose.Schema({
 const Spy = mongoose.model('Spy', spySchema);
 
 const addUser = (form) => {
-  console.log('formemail', form.email)
   return (Spy.create(form));
 };
 

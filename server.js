@@ -1,6 +1,5 @@
 const db = require('./db.js');
 const spy = require('./silentSpy.js');
-const token = require('./token.js');
 const puppeteer = require('puppeteer');
 var nodemailer = require('nodemailer');
 const express = require('express');
@@ -33,7 +32,6 @@ app.get('/token', async (req, res) => {
 
 app.get('/scraper/:product', async (req, res) => {
   let product = req.params.product;
-  console.log('product', product);
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -48,7 +46,6 @@ app.get('/scraper/:product', async (req, res) => {
     });
     return price;
   })
-  console.log('complete');
 
   // Respond with the image
   res.send(data);
@@ -60,7 +57,6 @@ app.get('*', (req, res) => {
 });
 
 app.post('/form', (req, res) => {
-  console.log(req.body);
   db.addUser(req.body)
     .then(() => { res.sendStatus(200); })
     .catch((err) => { console.log(err); })
@@ -98,6 +94,6 @@ app.post('/email', (req, res) => {
   })
 })
 
-app.listen(8080, () => {
-  console.log(`Example app listening on port 8080`);
+app.listen(3000, () => {
+  console.log(`Example app listening on port 3000`);
 });

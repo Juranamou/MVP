@@ -5,12 +5,11 @@ require('dotenv').config();
 async function looper() {
   db.findAll()
     .then(async (data) => {
-      console.log(data);
       for (var i = 0; i < data.length; i++) {
         let user = data[i];
         let urls = await axiosGet(user.query, user.target, user.min);
         if (urls.length > 0) {
-          axios.post('http://localhost:8080/email',
+          axios.post('http://localhost:3000/email',
            {
             from: 'johnlafayeti@gmail.com',
             to: user.email,
@@ -23,8 +22,11 @@ async function looper() {
 }
 
 async function axiosGet(query, target, min) {
+  let tokenReq = await axios.get('http://localhost:3000/token');
+  let token = tokenReq.data.access_token
+  console.log('TOKEN', token)
   let response = await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`,
-    { headers: { "Authorization": `Bearer ${process.env.TOKEN}` } })
+    { headers: { "Authorization": `Bearer ${token}` } })
 
   let data = response.data.itemSummaries
   let urls = [];
@@ -36,13 +38,11 @@ async function axiosGet(query, target, min) {
     }
   }
 
-  console.log('URL', urls);
   return urls;
-
 }
 
 setInterval(() => {
   // looper()
-}, 10000);
+}, 5000);
 
 
