@@ -12,7 +12,7 @@ export default function Main() {
   // token
   const [token, setToken] = useState('');
   useEffect(() => {
-    axios.get(`/token`)
+    axios.get(`${process.env.address}/token`)
       .then((data)=>{ setToken(data.data.access_token);})
   }, [])
 
@@ -57,7 +57,7 @@ export default function Main() {
     let query = search.split(' ');
     query = query.join('+');
     // sold data
-    axios.get(`/scraper/${query}`)
+    axios.get(`${process.env.address}/scraper/${query}`)
       .then((data) => {
         // create labels
         let labels = [];
@@ -135,7 +135,7 @@ export default function Main() {
       target: target,
       min: min
     };
-    axios.post(`/form`, form)
+    axios.post(`${process.env.address}/form`, form)
       .then(() => { setSuccess(true); })
   }
 

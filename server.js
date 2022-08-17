@@ -58,14 +58,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.post(`${process.env.address}/form`, (req, res) => {
+app.post(`/form`, (req, res) => {
   db.addUser(req.body)
     .then(() => { res.sendStatus(200); })
     .catch((err) => { console.log(err); })
 });
 
 // qcblmodnpmjvfcyy
-app.post(`${process.env.address}/email`, (req, res) => {
+app.post(`/email`, (req, res) => {
   var from = req.body.from;
   var to = req.body.to;
   var subject = req.body.subject;
