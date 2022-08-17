@@ -12,7 +12,7 @@ export default function Main() {
   // token
   const [token, setToken] = useState('');
   useEffect(() => {
-    axios.get('http://localhost:3000/token')
+    axios.get(`/token`)
       .then((data)=>{ setToken(data.data.access_token);})
   }, [])
 
@@ -57,7 +57,7 @@ export default function Main() {
     let query = search.split(' ');
     query = query.join('+');
     // sold data
-    axios.get(`http://localhost:3000/scraper/${query}`)
+    axios.get(`/scraper/${query}`)
       .then((data) => {
         // create labels
         let labels = [];
@@ -135,7 +135,7 @@ export default function Main() {
       target: target,
       min: min
     };
-    axios.post('http://localhost:3000/form', form)
+    axios.post(`/form`, form)
       .then(() => { setSuccess(true); })
   }
 

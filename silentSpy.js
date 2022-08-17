@@ -9,7 +9,7 @@ async function looper() {
         let user = data[i];
         let urls = await axiosGet(user.query, user.target, user.min);
         if (urls.length > 0) {
-          axios.post('http://localhost:3000/email',
+          axios.post(`/email`,
            {
             from: 'johnlafayeti@gmail.com',
             to: user.email,
@@ -22,9 +22,8 @@ async function looper() {
 }
 
 async function axiosGet(query, target, min) {
-  let tokenReq = await axios.get('http://localhost:3000/token');
+  let tokenReq = await axios.get(`/token`);
   let token = tokenReq.data.access_token
-  console.log('TOKEN', token)
   let response = await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${query}&limit=200`,
     { headers: { "Authorization": `Bearer ${token}` } })
 

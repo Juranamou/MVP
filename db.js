@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/MVP');
-  console.log('connected to mongodb://localhost:27017/MVP')
+  await mongoose.connect(process.env.mongod);
+  console.log('connected to mongod')
 }
 
 const spySchema = new mongoose.Schema({
