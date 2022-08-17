@@ -42,6 +42,6 @@ async function axiosGet(query, target, min) {
 
 setInterval(() => {
   looper()
-}, 1000000);
+}, 80000000);
 
 

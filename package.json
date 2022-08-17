@@ -40,6 +40,9 @@
     "webpack-dev-server": "^4.10.0"
   },
   "scripts": {
+    "startPro": "webpack --mode=production",
+    "serverPro": "node ./server.js",
+    "bothPro": "npm run startPro & npm run serverPro",
     "start": "webpack --mode=development --watch",
     "build": "webpack --mode=production",
     "dev": "webpack serve --open",
